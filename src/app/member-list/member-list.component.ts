@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { GLOBAL } from '../app-config';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { Member } from '../models/membre';
 import { MemberService } from '../services/member.service';
 
@@ -14,7 +16,7 @@ export class MemberListComponent implements OnInit {
   
   dataSource:Member[]
 
-  constructor(private MS:MemberService) {
+  constructor(private MS:MemberService, private dialog:MatDialog) {
     this.dataSource = MS.tab;
   }
 
@@ -25,9 +27,18 @@ export class MemberListComponent implements OnInit {
   }
 
   delete(item : any){
-    console.log(item);
-    //this.MS.deleteMember(item).then(() => this.dataSource = this.MS.tab);
-    this.MS.deleteMember(item).then(() => this.getAllData());
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent,{
+        //propriéte dialog
+      }
+      );
+      dialogRef.afterClosed().pipe().subscribe(isDeleteConfirmed => {
+        if  (isDeleteConfirmed){
+          console.log(item);
+          //this.MS.deleteMember(item).then(() => this.dataSource = this.MS.tab);
+          this.MS.deleteMember(item).then(() => this.getAllData());
+        }
+      });
   }
 
 }
