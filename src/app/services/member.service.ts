@@ -20,11 +20,15 @@ export class MemberService {
     //return this.httpClient.get<Member>('linkToRestAPI',id).toPromise();
     return new Promise(resolve=> resolve(this.tab.filter( item => item.id==id) [0]?? null));
   }
-  deleteMember(id : any){
-    return new Promise(resolve => {
-      const index = this.tab.findIndex(item => item.id==id);
-      this.tab.splice(index, 1);
-    });
-  }  
+  deleteMember(id : any): Promise<void>{
+    //return this.httpClient.delete<void>('linkToRestAPI').toPromise();
+    this.tab=this.tab.filter(item => item.id!==id)
+    return new Promise(resolve => resolve());
+  } 
+  
+  getAllMembers() : Promise<Member[]>{
+    //return this.httpClient.get<Member[]>('linkToRestAPI').toPromise();
+    return new Promise(resolve => resolve(this.tab));
+  }
 
 }

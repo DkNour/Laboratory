@@ -18,11 +18,16 @@ export class MemberListComponent implements OnInit {
     this.dataSource = MS.tab;
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  getAllData(): void{
+    this.MS.getAllMembers().then((data) => this.dataSource = data)
   }
+
   delete(item : any){
     console.log(item);
-    this.MS.deleteMember(item);
+    //this.MS.deleteMember(item).then(() => this.dataSource = this.MS.tab);
+    this.MS.deleteMember(item).then(() => this.getAllData());
   }
 
 }
