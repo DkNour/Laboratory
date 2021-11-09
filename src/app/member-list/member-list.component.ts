@@ -20,5 +20,9 @@ export class MemberListComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  delete(item : any){
+    console.log(item);
+    this.MS.deleteMember(item);
+  }
 
 }
